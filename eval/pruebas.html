@@ -1,0 +1,55 @@
+$("#mostrar").on("click",function(){
+
+
+    $.ajax({
+    url : URL,
+    type: 'POST',
+    async: true,
+    success: function(respuesta){
+
+        var data = respuesta
+        if(data.message && data.message == "Not Found"){
+            alert("No se consigui traer los archivos")
+
+
+        }else{
+            $(".nueva").remove()
+
+
+            for(var i=0;i<100;i++){
+                if(data[i].Ciudad==$("#selectCiudad").val() && data[i].Tipo==$("#selectTipo").val()){
+
+
+                    var pre="";
+                    var extraccion = data[i].Precio.substr(1);
+                    for(var p=0;p<=extraccion.length;p++){
+                        if(extraccion.charAt(p)!= ","){
+                            pre=pre+extraccion.charAt(p)
+                        }
+                    }
+
+
+
+                $('.colContenido').append(
+                        '<div class="row nueva"><img src="./img/home.jpg" alt="" class="col s3 m3 responsive-img "><div id="hola"class="blue white-text col s9 m9"><p><b>Direccion:</b>'+ data[i].Direccion +'<br><b>Ciudad:</b>'+data[i].Ciudad+'<br><b>Telefono:</b>'+data[i].Telefono +'<br><b>Codigo Postal:</b>'+data[i].Codigo_Postal +'<br><b>Tipo:</b>'+data[i].Tipo +'<br><b>Precio:</b>'+data[i].Precio +'</p></div></div>')
+
+
+
+
+                }else if(data[i].Ciudad==$("#selectCiudad").val() && $("#selectTipo").val()==null){
+                          $('.colContenido').append(
+                        '<div class="row nueva"><img src="./img/home.jpg" alt="" class="col s3 m3 responsive-img "><div id="hola"class="blue white-text col s9 m9"><p><b>Direccion:</b>'+ data[i].Direccion +'<br><b>Ciudad:</b>'+data[i].Ciudad+'<br><b>Telefono:</b>'+data[i].Telefono +'<br><b>Codigo Postal:</b>'+data[i].Codigo_Postal +'<br><b>Tipo:</b>'+data[i].Tipo +'<br><b>Precio:</b>'+data[i].Precio +'</p></div></div>')
+            }else if(data[i].Tipo==$("#selectTipo").val() && $("#selectCiudad").val()==null){
+                     $('.colContenido').append(
+                        '<div class="row nueva"><img src="./img/home.jpg" alt="" class="col s3 m3 responsive-img "><div id="hola"class="blue white-text col s9 m9"><p><b>Direccion:</b>'+ data[i].Direccion +'<br><b>Ciudad:</b>'+data[i].Ciudad+'<br><b>Telefono:</b>'+data[i].Telefono +'<br><b>Codigo Postal:</b>'+data[i].Codigo_Postal +'<br><b>Tipo:</b>'+data[i].Tipo +'<br><b>Precio:</b>'+data[i].Precio +'</p></div></div>')
+                     }
+
+
+
+
+        }
+        }
+    }
+})
+
+});
